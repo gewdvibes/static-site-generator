@@ -9,14 +9,19 @@ class TestHTMLNode(unittest.TestCase):
         props = {"href": "https://www.google.com", "target": "_blank",}
         node = HTMLNode(tag=tag, value=value, children=children, props=props)
         attributes = node.props_to_html()
+        print(f'Attributes: {attributes}')
+        print(f'Node: \n{node}')
         self.assertEqual(node.tag, tag)
         self.assertEqual(node.value, value)
         self.assertEqual(node.children, children)
         self.assertEqual(node.props, props)
+        self.assertEqual(attributes, f' href="https://www.google.com" target="_blank"')
 
     def test_eq2(self):
         node = HTMLNode()
         attributes = node.props_to_html()
+        print(f'Attributes: {attributes}')
+        print(f'Node: \n{node}')
         self.assertEqual(node.tag, None)
         self.assertEqual(node.value, None)
         self.assertEqual(node.children, None)
@@ -34,6 +39,7 @@ class TestHTMLNode(unittest.TestCase):
         self.assertEqual(node.children, children)
         self.assertEqual(node.props, props)
         self.assertEqual(attributes, f' href="https://www.boot.dev" autocapitalize="sentences"')
-
+        print(f'Attributes: {attributes}')
+        print(f'Node: \n{node}')
 if __name__ == "__main__":
     unittest.main()
