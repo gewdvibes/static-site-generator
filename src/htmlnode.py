@@ -5,7 +5,7 @@ class HTMLNode[T]:
         self.children = children
         self.props = props
 
-    def to_html(self) -> None:
+    def to_html(self) -> str | None:
         raise NotImplementedError()
 
     def props_to_html(self):
@@ -20,6 +20,15 @@ class HTMLNode[T]:
         return f'    Tag: {self.tag}\n    Value: {self.value}\n    Children: {self.children}\n    Props: {self.props}'
 
 class LeafNode(HTMLNode):
-    def __init__(self, tag, value, props) -> None:
+    def __init__(self, tag, value, children, props) -> None:
         super().__init__(tag, value, None, props)
 
+    def to_html(self) -> str | None:
+        if self.value == None or self.value == "":
+            raise ValueError('Value is required')
+        if self.tag == None or self.value == "":
+            return f'{self.value}'
+        if self.tag == "p":
+            return f'<{self.tag}>{self.value}</{self.tag}>'
+        if self.tag == "a":
+            return f'<{self.tag}' + self.props_to_html() + f'>{self.value}</{self.tag}>'
