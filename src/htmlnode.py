@@ -28,7 +28,4 @@ class LeafNode(HTMLNode):
             raise ValueError('Value is required')
         if self.tag == None or self.value == "":
             return f'{self.value}'
-        if self.tag == "p":
-            return f'<{self.tag}>{self.value}</{self.tag}>'
-        if self.tag == "a":
-            return f'<{self.tag}' + self.props_to_html() + f'>{self.value}</{self.tag}>'
+        return f'<{self.tag}' + self.props_to_html() + f'>{self.value}</{self.tag}>'
