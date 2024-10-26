@@ -1,51 +1,56 @@
 import unittest
-from textnode import TextNode
+from textnode import TextNode, TextType
 
 class TestTextNode(unittest.TestCase):
-    def test_eq(self):
-        node = TextNode("This is a bold text node", "bold")
-        node2 = TextNode("This is a bold text node", "bold")
-        self.assertEqual(node, node2)
+    def test_equality(self):
+        tests = [
+            (
+                TextNode("This is a text node", TextType.BOLD),
+                TextNode("This is a text node", TextType.BOLD)
+            ),
+            (
+                TextNode("This is a text node", TextType.ITALIC),
+                TextNode("This is a text node", TextType.ITALIC, None)
+            ),
+            (
+                TextNode("This is a text node", TextType.LINK, "https://www.boot.dev"),
+                TextNode("This is a text node", TextType.LINK, "https://www.boot.dev")
+            ),
+            (
+                TextNode("This is a text node", TextType.CODE),
+                TextNode("This is a text node", TextType.CODE)
+            ),
+            (
+                TextNode("This is a text node", TextType.IMAGE, "https://www.boot.dev"),
+                TextNode("This is a text node", TextType.IMAGE, "https://www.boot.dev")
+            ),
+        ]
 
-    def test_eq2(self):
-        node = TextNode("This is a bold text node", "bold")
-        node2 = TextNode("This is a bold text node", "bold", None)
-        self.assertEqual(node, node2)
+        for value, expected in tests:
+            self.assertEqual(value, expected)
 
-    def test_eq3(self):
-        node = TextNode("This is a bold text node", "bold", "https://www.boot.dev")
-        node2 = TextNode("This is a bold text node", "bold", "https://www.boot.dev")
-        self.assertEqual(node, node2)
+    def test_inequality(self):
+        tests = [
+            (
+                TextNode("This is a text node", TextType.ITALIC),
+                TextNode("This is a text node", TextType.NORMAL)
+            ),
+            (
+                TextNode("This is a text node", TextType.CODE, "https://www.boot.dev"),
+                TextNode("This is a text node", TextType.CODE)
+            ),
+            (
+                TextNode("This is a text node", TextType.BOLD),
+                TextNode("This is a text node", TextType.CODE)
+            ),
+            (
+                TextNode("This is a text node", TextType.BOLD, "https://www.boot.dev"),
+                TextNode("This is a text node", TextType.BOLD, "https://www.google.com")
+            ),
+        ]
 
-    def test_eq4(self):
-        node = TextNode("This is a italic text node", "italic")
-        node2 = TextNode("This is a italic text node", "italic")
-        self.assertEqual(node, node2)
-
-    def test_eq5(self):
-        node = TextNode("This is a italic text node", "italic")
-        node2 = TextNode("This is a italic text node", "italic", None)
-        self.assertEqual(node, node2)
-
-    def test_eq6(self):
-        node = TextNode("This is a italic text node", "italic", "https://www.boot.dev")
-        node2 = TextNode("This is a italic text node", "italic", "https://www.boot.dev")
-        self.assertEqual(node, node2)
-
-    def test_eq7(self):
-        node = TextNode("This is a code text node", "code")
-        node2 = TextNode("This is a code text node", "code")
-        self.assertEqual(node, node2)
-
-    def test_eq8(self):
-        node = TextNode("This is a code text node", "code")
-        node2 = TextNode("This is a code text node", "code", None)
-        self.assertEqual(node, node2)
-
-    def test_eq9(self):
-        node = TextNode("This is a code text node", "code", "https://www.boot.dev")
-        node2 = TextNode("This is a code text node", "code", "https://www.boot.dev")
-        self.assertEqual(node, node2)
+        for value, expected in tests:
+            self.assertNotEqual(value, expected)
 
 if __name__ == "__main__":
     unittest.main()

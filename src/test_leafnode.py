@@ -1,45 +1,71 @@
 import unittest
-from htmlnode import HTMLNode
+from htmlnode import LeafNode
 
-class TestHTMLNode(unittest.TestCase):
+class TestLeafNode(unittest.TestCase):
+
     def test_eq1(self):
         tag = 'a'
         value = 'Website'
-        children = None
         props = {"href": "https://www.google.com", "target": "_blank",}
-        node = HTMLNode(tag=tag, value=value, children=children, props=props)
+        node = LeafNode(tag, value, props)
         attributes = node.props_to_html()
-        print(f'Attributes: {attributes}')
-        print(f'Node: \n{node}')
-        self.assertEqual(node.tag, tag)
-        self.assertEqual(node.value, value)
-        self.assertEqual(node.children, children)
-        self.assertEqual(node.props, props)
-        self.assertEqual(attributes, f' href="https://www.google.com" target="_blank"')
+        html_string = node.to_html()
+
+        tests = [
+            (node.tag, 'a'),
+            (node.value, 'Website'),
+            (node.children, None),
+            (node.props, {"href": "https://www.google.com", "target": "_blank",}),
+            (attributes, f' href="https://www.google.com" target="_blank"'),
+            (html_string, f'<a href="https://www.google.com" target="_blank">Website</a>'),
+        ]
+
+        for value, expected in tests:
+            self.assertEqual(value, expected)
 
     def test_eq2(self):
-        node = HTMLNode()
-        attributes = node.props_to_html()
-        print(f'Attributes: {attributes}')
-        print(f'Node: \n{node}')
-        self.assertEqual(node.tag, None)
-        self.assertEqual(node.value, None)
-        self.assertEqual(node.children, None)
-        self.assertEqual(node.props, None)
-        self.assertEqual(attributes, '')
+        node = LeafNode('p', 'Cat Pics', {'href': 'https://letmegooglethat.com/?q=cats', 'autocapitalize': 'sentences'})
+
+        tests = [
+            (node.tag, 'p'),
+            (node.value, 'Cat Pics'),
+            (node.children, None),
+            (node.props, {'href': 'https://letmegooglethat.com/?q=cats', 'autocapitalize': 'sentences'}),
+            (node.props_to_html(), f' href="https://letmegooglethat.com/?q=cats" autocapitalize="sentences"'),
+            (node.to_html(), f'<p href="https://letmegooglethat.com/?q=cats" autocapitalize="sentences">Cat Pics</p>'),
+        ]
+
+        for value, expected in tests:
+            self.assertEqual(value, expected)
 
     def test_eq3(self):
         tag = 'p'
-        children = [HTMLNode('a','website',None,None), HTMLNode('h1','header',None,None), HTMLNode('p','paragraph',None,None)]
+        value = None
         props = {"href": "https://www.boot.dev", "autocapitalize": "sentences",}
-        node = HTMLNode(tag=tag, children=children, props=props)
-        attributes = node.props_to_html()
-        self.assertEqual(node.tag, tag)
-        self.assertEqual(node.value, None)
-        self.assertEqual(node.children, children)
-        self.assertEqual(node.props, props)
-        self.assertEqual(attributes, f' href="https://www.boot.dev" autocapitalize="sentences"')
-        print(f'Attributes: {attributes}')
-        print(f'Node: \n{node}')
+        node = LeafNode(tag, value, props)
+
+        with self.assertRaises(TypeError):
+            node.type_checks()
+
+        tests = [
+            (node.tag, 'p'),
+            (node.value, None),
+            (node.props, {"href": "https://www.boot.dev", "autocapitalize": "sentences",}),
+            (node.props_to_html(), f' href="https://www.boot.dev" autocapitalize="sentences"'),
+        ]
+
+        for value, expected in tests:
+            self.assertEqual(value, expected)
+
+    def test_eq4(self):
+        tag = 'p'
+        value = 'Website'
+        props = 52
+        node = LeafNode(tag, value, props)
+
+        with self.assertRaises(TypeError):
+            node.type_checks()
+            node.props_to_html()
+
 if __name__ == "__main__":
     unittest.main()
