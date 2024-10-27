@@ -7,7 +7,7 @@ class TestLeafNode(unittest.TestCase):
         tag = 'a'
         value = 'Website'
         props = {"href": "https://www.google.com", "target": "_blank",}
-        node = LeafNode(value, tag=tag, props=props)
+        node = LeafNode(tag, value, props=props)
         attributes = node.props_to_html()
         html_string = node.to_html()
 
@@ -27,7 +27,7 @@ class TestLeafNode(unittest.TestCase):
         tag = 'p'
         value = 'Cat Pics'
         props = {'href': 'https://letmegooglethat.com/?q=cats', 'autocapitalize': 'sentences'}
-        node = LeafNode(value, tag=tag, props=props)
+        node = LeafNode(tag, value, props=props)
 
         tests = [
             (node.tag, 'p'),
@@ -45,7 +45,7 @@ class TestLeafNode(unittest.TestCase):
         tag = 'p'
         value = None
         props = {"href": "https://www.boot.dev", "autocapitalize": "sentences",}
-        node = LeafNode(value, tag=tag, props=props)
+        node = LeafNode(tag, value, props=props)
 
         with self.assertRaises(TypeError):
             node.type_checks()
@@ -65,7 +65,7 @@ class TestLeafNode(unittest.TestCase):
         tag = 'p'
         value = 'Website'
         props = 52
-        node = LeafNode(value, tag=tag, props=props)
+        node = LeafNode(tag, value, props=props)
 
         with self.assertRaises(TypeError):
             node.type_checks()
