@@ -7,7 +7,7 @@ class TestLeafNode(unittest.TestCase):
         tag = 'a'
         value = 'Website'
         props = {"href": "https://www.google.com", "target": "_blank",}
-        node = LeafNode(tag, value, props)
+        node = LeafNode(value, tag=tag, props=props)
         attributes = node.props_to_html()
         html_string = node.to_html()
 
@@ -24,7 +24,10 @@ class TestLeafNode(unittest.TestCase):
             self.assertEqual(value, expected)
 
     def test_eq2(self):
-        node = LeafNode('p', 'Cat Pics', {'href': 'https://letmegooglethat.com/?q=cats', 'autocapitalize': 'sentences'})
+        tag = 'p'
+        value = 'Cat Pics'
+        props = {'href': 'https://letmegooglethat.com/?q=cats', 'autocapitalize': 'sentences'}
+        node = LeafNode(value, tag=tag, props=props)
 
         tests = [
             (node.tag, 'p'),
@@ -42,7 +45,7 @@ class TestLeafNode(unittest.TestCase):
         tag = 'p'
         value = None
         props = {"href": "https://www.boot.dev", "autocapitalize": "sentences",}
-        node = LeafNode(tag, value, props)
+        node = LeafNode(value, tag=tag, props=props)
 
         with self.assertRaises(TypeError):
             node.type_checks()
@@ -50,6 +53,7 @@ class TestLeafNode(unittest.TestCase):
         tests = [
             (node.tag, 'p'),
             (node.value, None),
+            (node.children, None),
             (node.props, {"href": "https://www.boot.dev", "autocapitalize": "sentences",}),
             (node.props_to_html(), f' href="https://www.boot.dev" autocapitalize="sentences"'),
         ]
@@ -61,7 +65,7 @@ class TestLeafNode(unittest.TestCase):
         tag = 'p'
         value = 'Website'
         props = 52
-        node = LeafNode(tag, value, props)
+        node = LeafNode(value, tag=tag, props=props)
 
         with self.assertRaises(TypeError):
             node.type_checks()

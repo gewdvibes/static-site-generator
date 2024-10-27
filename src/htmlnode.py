@@ -1,11 +1,5 @@
 class HTMLNode:
-    def __init__(
-        self,
-        tag = None,
-        value = None,
-        children = None,
-        props = None
-    ):
+    def __init__(self, tag=None, value=None, children=None, props=None):
         self.tag = tag
         self.value = value
         self.children = children
@@ -31,13 +25,13 @@ class HTMLNode:
         )
 
 class LeafNode(HTMLNode):
-    def __init__(self, tag, value, props):
+    def __init__(self, value, tag=None, props=None):
         super().__init__(tag, value, None, props)
 
     def to_html(self):
         if self.value == None or self.value == "":
             raise ValueError('Value is required')
-        if self.tag == None or self.value == "":
+        if self.tag == None or self.value.strip() == "":
             return f'{self.value}'
         return (
             f'<{self.tag}'
@@ -54,5 +48,17 @@ class LeafNode(HTMLNode):
             raise TypeError('Props must be a dictionary or None')
 
 class ParentNode(HTMLNode):
-    def __init__(self, tag=None, value=None, children=None, props=None):
-        super().__init__(tag, value, children, props)
+    def __init__(self, children, tag=None, props=None):
+        super().__init__(tag, None, children, props)
+
+    def to_html(self):
+        if self.tag is None or self.tag.strip() == "":
+            raise ValueError('Tag is required')
+        if self.children is None or type(self.children) is type([]):
+            raise ValueError('Children are required and must be a list')
+
+        children_string = ''
+        for child in self.children:
+            children_string += child.to_html()
+
+        return f'<{self.tag}{children_string}{self.props_to_html()}></{self.tag}>'
