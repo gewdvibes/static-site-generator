@@ -54,9 +54,9 @@ class LeafNode(HTMLNode):
         super().__init__(tag, value, None, props)
 
     def to_html(self):
-        if self.value == None or self.value == "":
+        if self.value is None:
             raise ValueError('Value is required')
-        if self.tag == None or self.value.strip() == "":
+        if self.tag is None or self.tag.strip() == "":
             return f'{self.value}'
         return (
             f'<{self.tag}'
@@ -101,7 +101,7 @@ def text_node_to_html_node(text_node):
         case TextType.LINK:
             return LeafNode(tag='a', value=text_node.text, props={'href': text_node.url})
         case TextType.IMAGE:
-            return LeafNode(tag='img', value=None, props={'src': text_node.url, 'alt': text_node.text})
+            return LeafNode(tag='img', value='', props={'src': text_node.url, 'alt': text_node.text})
         case _:
             raise Exception('Not a valid type.')
 

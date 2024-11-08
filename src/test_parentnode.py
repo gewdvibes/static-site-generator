@@ -23,7 +23,7 @@ class TestParentNode(unittest.TestCase):
         props = ''
         node = ParentNode(tag, children, props)
 
-        print(node.to_html())
+        self.assertEqual(node.to_html(), '<p><a href="https://www.boot.dev" autocapitalize="sentences">Leaf1</a><p><a href="https://www.boot.dev">Leaf3</a><p autocapitalize="sentences">Leaf4</p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p><p target="_blank">Leaf2</p></p>')
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,5 @@
 import unittest
-from nodes import TextNode, TextType
+from nodes import TextNode, TextType, text_node_to_html_node
 
 class TestTextNode(unittest.TestCase):
     def test_equality(self):
@@ -51,6 +51,20 @@ class TestTextNode(unittest.TestCase):
 
         for value, expected in tests:
             self.assertNotEqual(value, expected)
+
+    def test_conversion(self):
+        tests = [
+            TextNode("testing", TextType.TEXT),
+            TextNode("testing", TextType.BOLD),
+            TextNode("testing", TextType.ITALIC),
+            TextNode("testing", TextType.CODE),
+            TextNode("testing", TextType.LINK, "https://www.boot.dev"),
+            TextNode("testing", TextType.IMAGE, "https://www.google.com/image.jpg"),
+        ]
+
+        for node in tests:
+            leaf = text_node_to_html_node(node)
+            print(leaf.to_html())
 
 if __name__ == "__main__":
     unittest.main()
