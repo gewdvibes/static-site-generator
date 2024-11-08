@@ -1,5 +1,5 @@
 import unittest
-from textnode import TextNode, TextType
+from nodes import TextNode, TextType
 
 class TestTextNode(unittest.TestCase):
     def test_equality(self):
@@ -33,7 +33,7 @@ class TestTextNode(unittest.TestCase):
         tests = [
             (
                 TextNode("This is a text node", TextType.ITALIC),
-                TextNode("This is a text node", TextType.NORMAL)
+                TextNode("This is a text node", TextType.TEXT)
             ),
             (
                 TextNode("This is a text node", TextType.CODE, "https://www.boot.dev"),
