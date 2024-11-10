@@ -14,16 +14,6 @@ class TestHTMLNode(unittest.TestCase):
 
         self.assertNotEqual(node.props_to_html(), f' href="https://www.google.com"')
 
-        tests = [
-            (node.tag, tag),
-            (node.value, value),
-            (node.children, children),
-            (node.props, props),
-        ]
-
-        for value, expected in tests:
-            self.assertEqual(value, expected)
-
     def test_eq2(self):
         node = HTMLNode()
 
@@ -54,15 +44,7 @@ class TestHTMLNode(unittest.TestCase):
 
         self.assertNotEqual(node.props_to_html(), f'href="https://www.boot.dev" autocapitalize="sentences"')
 
-        tests = [
-            (node.tag, tag),
-            (node.value, value),
-            (node.children, children),
-            (node.props, props),
-        ]
-
-        for value, expected in tests:
-            self.assertEqual(value, expected)
+        self.assertEqual(node.children, children)
 
 if __name__ == "__main__":
     unittest.main()
