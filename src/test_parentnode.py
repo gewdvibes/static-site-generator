@@ -6,19 +6,19 @@ class TestParentNode(unittest.TestCase):
     def test_eq1(self):
         tag = 'p'
         children = [
-            LeafNode('a', 'Leaf1', props={"href": "https://www.boot.dev", "autocapitalize": "sentences",}),
+            LeafNode(tag='a', value='Leaf1', props={"href": "https://www.boot.dev", "autocapitalize": "sentences",}),
             ParentNode(
+                tag='p',
                 children=[
-                    LeafNode('a', 'Leaf3', props={"href": "https://www.boot.dev"}),
-                    LeafNode('p', 'Leaf4',  props={"autocapitalize": "sentences"}),
-                    LeafNode("b", "Bold text"),
-                    LeafNode(None, "Normal text"),
-                    LeafNode("i", "italic text"),
-                    LeafNode(None, "Normal text"),
-                ],
-                tag='p'
+                    LeafNode(tag='a', value='Leaf3', props={"href": "https://www.boot.dev"}),
+                    LeafNode(tag='p', value='Leaf4',  props={"autocapitalize": "sentences"}),
+                    LeafNode(tag='b', value='Bold text'),
+                    LeafNode(tag=None, value='Normal text'),
+                    LeafNode(tag="i",  value='italic text'),
+                    LeafNode(tag=None, value='Normal text'),
+                ]
             ),
-            LeafNode('p', 'Leaf2', props={"target": "_blank"}),
+            LeafNode(tag='p', value='Leaf2', props={"target": "_blank"}),
         ]
         props = ''
         node = ParentNode(tag, children, props)

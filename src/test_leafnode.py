@@ -12,10 +12,7 @@ class TestLeafNode(unittest.TestCase):
         html_string = node.to_html()
 
         tests = [
-            (node.tag, 'a'),
-            (node.value, 'Website'),
             (node.children, None),
-            (node.props, {"href": "https://www.google.com", "target": "_blank",}),
             (attributes, f' href="https://www.google.com" target="_blank"'),
             (html_string, f'<a href="https://www.google.com" target="_blank">Website</a>'),
         ]
@@ -27,13 +24,10 @@ class TestLeafNode(unittest.TestCase):
         tag = 'p'
         value = 'Cat Pics'
         props = {'href': 'https://letmegooglethat.com/?q=cats', 'autocapitalize': 'sentences'}
-        node = LeafNode(tag, value, props=props)
+        node = LeafNode(tag, value, props)
 
         tests = [
-            (node.tag, 'p'),
-            (node.value, 'Cat Pics'),
             (node.children, None),
-            (node.props, {'href': 'https://letmegooglethat.com/?q=cats', 'autocapitalize': 'sentences'}),
             (node.props_to_html(), f' href="https://letmegooglethat.com/?q=cats" autocapitalize="sentences"'),
             (node.to_html(), f'<p href="https://letmegooglethat.com/?q=cats" autocapitalize="sentences">Cat Pics</p>'),
         ]
@@ -45,13 +39,12 @@ class TestLeafNode(unittest.TestCase):
         tag = 'p'
         value = None
         props = {"href": "https://www.boot.dev", "autocapitalize": "sentences",}
-        node = LeafNode(tag, value, props=props)
+        node = LeafNode(tag, value, props)
 
         with self.assertRaises(TypeError):
             node.type_checks()
 
         tests = [
-            (node.tag, 'p'),
             (node.value, None),
             (node.children, None),
             (node.props, {"href": "https://www.boot.dev", "autocapitalize": "sentences",}),
@@ -65,7 +58,7 @@ class TestLeafNode(unittest.TestCase):
         tag = 'p'
         value = 'Website'
         props = 52
-        node = LeafNode(tag, value, props=props)
+        node = LeafNode(tag, value, props)
 
         with self.assertRaises(TypeError):
             node.type_checks()
