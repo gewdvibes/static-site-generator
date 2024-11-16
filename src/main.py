@@ -1,8 +1,7 @@
-from htmlnode import HTMLNode, LeafNode, ParentNode
-from textnode import TextNode
+from nodes import HTMLNode, LeafNode, ParentNode, TextNode, TextType
 
 def main():
-    dummy = TextNode("This is a text node", "bold", "https://www.boot.dev")
+    dummy = TextNode("This is a text node", TextType.BOLD, "https://www.boot.dev")
     print(dummy)
     dummy_html = HTMLNode(
         tag = 'a',
@@ -11,6 +10,7 @@ def main():
         props = {"href": "https://www.google.com", "target": "_blank",}
     )
     print(f'HTMLNode:\n {dummy_html}')
+    print(dummy_html.props_to_html())
 
     dummy_leaf = LeafNode(
         tag = 'p',
@@ -19,9 +19,11 @@ def main():
     )
     print(f'LeafNode:\n {dummy_leaf}')
 
-    dummy_parent = LeafNode(
+    dummy_parent = ParentNode(
         tag = 'p',
-        value = 'Testing',
+        children = [
+            dummy_leaf
+        ],
         props = None
     )
     print(f'ParentNode:\n {dummy_parent}')

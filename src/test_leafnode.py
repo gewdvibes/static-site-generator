@@ -41,18 +41,17 @@ class TestLeafNode(unittest.TestCase):
         props = {"href": "https://www.boot.dev", "autocapitalize": "sentences",}
         node = LeafNode(tag, value, props)
 
-        with self.assertRaises(TypeError):
-            node.type_checks()
-
         tests = [
             (node.value, None),
             (node.children, None),
-            (node.props, {"href": "https://www.boot.dev", "autocapitalize": "sentences",}),
             (node.props_to_html(), f' href="https://www.boot.dev" autocapitalize="sentences"'),
         ]
 
         for value, expected in tests:
             self.assertEqual(value, expected)
+
+        with self.assertRaises(ValueError):
+            node.to_html()
 
     def test_eq4(self):
         tag = 'p'
@@ -61,7 +60,6 @@ class TestLeafNode(unittest.TestCase):
         node = LeafNode(tag, value, props)
 
         with self.assertRaises(TypeError):
-            node.type_checks()
             node.props_to_html()
 
 if __name__ == "__main__":

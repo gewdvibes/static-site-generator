@@ -11,7 +11,7 @@ class TextType(Enum):
 class TextNode:
     def __init__(self, text, text_type, url=None):
         self.text = text
-        self.text_type = TextType(text_type)
+        self.text_type = text_type
         self.url = url
 
     def __eq__(self, node):
@@ -43,10 +43,10 @@ class HTMLNode:
 
     def __repr__(self):
         return (
-            f'    Tag: {self.tag}\n'
+            f'\n    Tag: {self.tag}\n'
             f'    Value: {self.value}\n'
             f'    Children: {self.children}\n'
-            f'    Props: {self.props}'
+            f'    Props: {self.props}\n'
         )
 
 class LeafNode(HTMLNode):
@@ -63,14 +63,6 @@ class LeafNode(HTMLNode):
             f'{self.props_to_html()}'
             f'>{self.value}</{self.tag}>'
         )
-
-    def type_checks(self):
-        if type(self.value) is type(None):
-            raise TypeError('Value cannot be None')
-        if type(self.children) is not type(None):
-            raise TypeError('LeafNodes cannot have children')
-        if type(self.props) is not type({}) or type(self.props) is not type(None):
-            raise TypeError('Props must be a dictionary or None')
 
 class ParentNode(HTMLNode):
     def __init__(self, tag, children, props=None):
