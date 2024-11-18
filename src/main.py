@@ -1,4 +1,4 @@
-from nodes import HTMLNode, LeafNode, ParentNode, TextNode, TextType
+from nodes import HTMLNode, LeafNode, ParentNode, TextNode
 
 
 def main():
